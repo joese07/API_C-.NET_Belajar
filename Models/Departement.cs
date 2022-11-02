@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace API.Models
 {
@@ -14,7 +15,8 @@ namespace API.Models
         public int DivisionId { get; set; }
 
         [ForeignKey("DivisionId")]
-        public virtual Division Divisions { get; set; }
+        [JsonIgnore]
+        public virtual Division? Divisions { get; set; }
     }
 }
 
