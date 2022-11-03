@@ -58,21 +58,29 @@ namespace API.Controllers
         {
             try
             {
+                ResponseLogin responseLogin = new ResponseLogin();
                
                 var result = _repository.Login(email, password);
-                if(result == 0)
+                if(result == null)
                 {
-                    return Ok(new { Message = "Login Failed" });
+                    return Ok(new
+                    {
+                        StatusCode = 200,
+                        Message = "Login Failed",
+                       
+
+                    });
                 }
 
                 return Ok(new
                 {
                     StatusCode = 200,
                     Message = "Login Successful",
-                    Data = result
-                   
-                   
-                }); 
+                    Data = new
+                    {
+                        FullName = result
+                    }
+                });
             } catch
             {
                 return BadRequest(new
@@ -111,7 +119,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpPut("ChangePassword/{id}")]
+        [HttpPut("ChangePassword")]
         public ActionResult ChangePassword(int id, string oldPassword, string retypePassword, string password)
         {
             try

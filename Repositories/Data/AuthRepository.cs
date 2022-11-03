@@ -60,7 +60,7 @@ namespace API.Repositories.Data
             return 0;
         }
 
-        public int Login(string email, string password)
+        public string Login(string email, string password)
         {
             var data = myContext.Users
                .Include(x => x.Employee)
@@ -71,25 +71,19 @@ namespace API.Repositories.Data
             {
                 if (Hashing.ValidatePassword(password, data.Password))
                 {
-                    ResponseLogin responseLogin = new ResponseLogin()
-                    {
-                        Id = data.Employee.Id,
-                        FullName = data.Employee.FullName,
-                        Email = data.Employee.Email,
-                        Role = data.Roles.Name,
-                    };
+                   
 
-                    return data.Employee.Id;
+                    var result = data.Employee.FullName;
+             
+                    return result;
            
                 }
 
-              
-                return 0;
+                return null;
 
             }
 
-          
-            return 0;
+            return null;
         }
 
 
