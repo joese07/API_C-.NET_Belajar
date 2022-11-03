@@ -25,8 +25,34 @@ namespace API.Controllers
         [HttpGet]
         public ActionResult GetAll()
         {
-            var data = _repository.Get();
-            return Ok(data);
+            try
+            {
+                var data = _repository.Get();
+                if(data == null)
+                {
+                    return Ok(new
+                    {
+                        StatusCode = 200,
+                        Message = "Data Not Found",
+                    });
+                } else
+                {
+                    return Ok(new
+                    {
+                        StatusCode = 200,
+                        Message = "Data Load Successful",
+                        Data = data
+                    });
+                }
+            } catch
+            {
+                return BadRequest(new
+                {
+                    StatusCode = 400,
+                    Message = "Something Wrong..."
+                });
+            }
+             
         }
 
 
@@ -34,10 +60,30 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
-            var data = _repository.GetById(id);
-            if (data == null)
-                return Ok(new { Message = "Data Not Found" });
-            return Ok(data);
+            try
+            {
+                var data = _repository.GetById(id);
+                if (data == null)
+                {
+                    return Ok(new { Message = "Data Not Found" });
+                } else
+                {
+                    return Ok(new
+                    {
+                        Message = "Data Load Successful",
+                        Data = data
+                    });
+                }
+   
+            } catch
+            {
+                return BadRequest(new
+                {
+                    StatusCode = 400,
+                    Message = "Something Wrong..."
+                });
+            }
+           
 
 
         }
@@ -46,12 +92,23 @@ namespace API.Controllers
         [HttpPost]
         public ActionResult Create(Departement  departement)
         {
-            var result = _repository.Create(departement);
-            if (result == 0)
+            try
             {
-                return Ok(new { Message = "Failed Create New Data" });
+                var result = _repository.Create(departement);
+                if (result == 0)
+                {
+                    return Ok(new { Message = "Failed Create New Data" });
+                }
+                return Ok(new { Message = "Success Create New Data" });
+            } catch
+            {
+                return BadRequest(new
+                {
+                    StatusCode = 400,
+                    Message = "Something Wrong..."
+                });
             }
-            return Ok(new { Message = "Success Create New Data" });
+           
         }
 
 
@@ -60,12 +117,23 @@ namespace API.Controllers
         [HttpPut("{Id}")]
         public ActionResult Update(Departement departement)
         {
-            var result = _repository.Update(departement);
-            if (result == 0)
+            try
             {
-                return Ok(new { Message = "Failed Update Data" });
+                var result = _repository.Update(departement);
+                if (result == 0)
+                {
+                    return Ok(new { Message = "Failed Update Data" });
+                }
+                return Ok(new { Message = "Success Update Data" });
+            } catch
+            {
+                return BadRequest(new
+                {
+                    StatusCode = 400,
+                    Message = "Something Wrong..."
+                });
             }
-            return Ok(new { Message = "Success Update Data" });
+           
         }
 
 
@@ -73,13 +141,24 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            var result = _repository.Delete(id);
-            if (result == 0)
+            try
             {
-                return Ok(new { Message = "Failed Delete Data" });
+                var result = _repository.Delete(id);
+                if (result == 0)
+                {
+                    return Ok(new { Message = "Failed Delete Data" });
 
+                }
+                return Ok(new { Message = "Deleted Data Sucessful" });
+            } catch
+            {
+                return BadRequest(new
+                {
+                    StatusCode = 400,
+                    Message = "Something Wrong..."
+                });
             }
-            return Ok(new { Message = "Deleted Data Sucessful" });
+           
         }
 
 
