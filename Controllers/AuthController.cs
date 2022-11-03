@@ -78,7 +78,10 @@ namespace API.Controllers
                     Message = "Login Successful",
                     Data = new
                     {
-                        FullName = result
+                        Id = Convert.ToInt32(result[0]),
+                        FullName = result[1],
+                        Email = result[2],
+                        Role = result[3]
                     }
                 });
             } catch

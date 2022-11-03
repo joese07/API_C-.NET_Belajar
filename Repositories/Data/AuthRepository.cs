@@ -60,7 +60,7 @@ namespace API.Repositories.Data
             return 0;
         }
 
-        public string Login(string email, string password)
+        public string[] Login(string email, string password)
         {
             var data = myContext.Users
                .Include(x => x.Employee)
@@ -71,11 +71,15 @@ namespace API.Repositories.Data
             {
                 if (Hashing.ValidatePassword(password, data.Password))
                 {
-                   
 
-                    var result = data.Employee.FullName;
-             
+                    string[] result = new string[4];
+                    result[0] = Convert.ToString(data.Employee.Id);
+                    result[1] = data.Employee.FullName;
+                    result[2] = data.Employee.Email;
+                    result[3] = data.Roles.Name;
+
                     return result;
+
            
                 }
 
