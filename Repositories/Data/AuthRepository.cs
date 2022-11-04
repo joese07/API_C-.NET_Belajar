@@ -47,20 +47,20 @@ namespace API.Repositories.Data
                         myContext.Users.Add(user);
                         var resultUser = myContext.SaveChanges();
                         if (resultUser > 0)
-                            return resultUser;
+                            return 2;
 
                     }
 
-                    return result;
+                    return 2;
 
                 }
-                return 0;
-               
+                 return 1;
+  
             }
             return 0;
         }
 
-        public string[] Login(string email, string password)
+        public string[]? Login(string email, string password)
         {
             var data = myContext.Users
                .Include(x => x.Employee)
@@ -112,12 +112,12 @@ namespace API.Repositories.Data
 
                 }
 
-                return 0 ;
+                return 1 ;
 
             }
             catch 
             {
-                return 0;
+                return 1;
             }
 
         }
@@ -146,7 +146,7 @@ namespace API.Repositories.Data
 
 
               
-                return 0;
+                return 1;
             }
 
           

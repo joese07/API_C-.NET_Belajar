@@ -23,7 +23,7 @@ namespace API.Controllers
         }
 
         // POST api/values
-        [HttpPost("register")]
+        [HttpPost("Register")]
         public ActionResult Register(string fullName, string email, string birthDate, string password, string retypePassword)
         {
             try
@@ -31,17 +31,21 @@ namespace API.Controllers
                 var result = _repository.Register(fullName, email, birthDate, password, retypePassword);
                 if(result == 0)
                 {
+                    return Ok(new { Message = "Email Already Exists"});
+                }
+                else if(result == 1)
+                {
+                    return Ok(new { Message = "Retype Password Invalid"});
+                }
+                else
+                {
                     return Ok(new
                     {
                         StatusCode = 200,
-                        Message = "Register Failed"
+                        Message = "Register Successful"
                     });
                 }
-                return Ok(new
-                {
-                    StatusCode = 200,
-                    Message = "Register Successful"
-                });
+               
             } catch
             {
                 return BadRequest(new
@@ -66,7 +70,7 @@ namespace API.Controllers
                     return Ok(new
                     {
                         StatusCode = 200,
-                        Message = "Login Failed",
+                        Message = "Email or Password Invalid",
                        
 
                     });
@@ -78,7 +82,7 @@ namespace API.Controllers
                     Message = "Login Successful",
                     Data = new
                     {
-                        Id = Convert.ToInt32(result[0]),
+                        Id = Convert.ToUInt32(result[0]),
                         FullName = result[1],
                         Email = result[2],
                         Role = result[3]
@@ -104,8 +108,11 @@ namespace API.Controllers
                 var result = _repository.NewPassword(id, password, retypePassword);
                 if(result == 0)
                 {
-                    return Ok(new { Message = "Reset Password Failed" });
+                    return Ok(new { Message = "Retype Password Invalid" });
 
+                } else if( result == 1)
+                {
+                    return Ok(new { Message = "Reset Password Failed" });
                 }
                 return Ok(new
                 {
@@ -131,6 +138,9 @@ namespace API.Controllers
                 if(result == 0)
                 {
                     return Ok(new { Message = "Change Password Failed" });
+                } else if(result == 1)
+                {
+                    return Ok(new { Message = "Retype Password Failed" });
                 }
                 return Ok(new {
                     StatusCode = 200,
