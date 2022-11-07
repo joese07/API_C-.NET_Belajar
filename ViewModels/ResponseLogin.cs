@@ -1,9 +1,9 @@
-﻿using System;
-namespace API.Models
+﻿
+using System;
+namespace API.ViewModels
 {
     public class ResponseLogin
     {
-        public int Id { get; set; }
 
         public string FullName { get; set; }
 

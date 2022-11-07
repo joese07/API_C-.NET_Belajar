@@ -5,16 +5,22 @@ using API.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace API.Repositories.Data
 {
     public class AuthRepository
     {
         private MyContext myContext;
+        public IConfiguration _configuration;
 
-        public AuthRepository(MyContext context)
+        public AuthRepository(MyContext context, IConfiguration config)
         {
             myContext = context;
+            _configuration = config;
         }
 
         public int Register(string fullName, string email, string birthDate, string password, string retypePassword)
@@ -60,7 +66,7 @@ namespace API.Repositories.Data
             return 0;
         }
 
-        public string[]? Login(string email, string password)
+        public string Login(string email, string password)
         {
             var data = myContext.Users
                .Include(x => x.Employee)
@@ -71,16 +77,39 @@ namespace API.Repositories.Data
             {
                 if (Hashing.ValidatePassword(password, data.Password))
                 {
+                    var claims = new[]
+                    {
+                        new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
+                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                        new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
+                        new Claim("UserId", data.Employee.Id.ToString()),
+                        new Claim("DisplayName", data.Employee.FullName),
+                        new Claim("Email", data.Employee.Email),
+                        new Claim("Roles", data.Roles.Name)
+                    };
 
-                    string[] result = new string[4];
-                    result[0] = Convert.ToString(data.Employee.Id);
-                    result[1] = data.Employee.FullName;
-                    result[2] = data.Employee.Email;
-                    result[3] = data.Roles.Name;
+                    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+                    var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                    var token = new JwtSecurityToken(
+                        _configuration["Jwt:Issuer"],
+                        _configuration["Jwt:Audience"],
+                        claims,
+                        expires: DateTime.UtcNow.AddMinutes(10),
+                        signingCredentials: signIn);
+
+                    var result = new JwtSecurityTokenHandler().WriteToken(token);
+
+                    //return Ok(new JwtSecurityTokenHandler().WriteToken(token));
+
+                    //string[] result = new string[4];
+                    //result[0] = Convert.ToString(data.Employee.Id);
+                    //result[1] = data.Employee.FullName;
+                    //result[2] = data.Employee.Email;
+                    //result[3] = data.Roles.Name;
 
                     return result;
 
-           
+
                 }
 
                 return null;

@@ -16,14 +16,18 @@ namespace API.Controllers
     public class AuthController : Controller
     {
         private AuthRepository _repository;
+
+
        
-        public AuthController(AuthRepository authRepository)
+        public AuthController(AuthRepository authRepository,IConfiguration config, MyContext context)
         {
             _repository = authRepository;
+         
         }
 
         // POST api/values
         [HttpPost("Register")]
+        
         public ActionResult Register(string fullName, string email, string birthDate, string password, string retypePassword)
         {
             try
@@ -58,11 +62,12 @@ namespace API.Controllers
 
         // PUT api/values/5
         [HttpPost("Login")]
+    
         public ActionResult Login(string email, string password)
         {
             try
             {
-                ResponseLogin responseLogin = new ResponseLogin();
+               
                
                 var result = _repository.Login(email, password);
                 if(result == null)
@@ -80,13 +85,7 @@ namespace API.Controllers
                 {
                     StatusCode = 200,
                     Message = "Login Successful",
-                    Data = new
-                    {
-                        Id = Convert.ToUInt32(result[0]),
-                        FullName = result[1],
-                        Email = result[2],
-                        Role = result[3]
-                    }
+                    Data = result
                 });
             } catch
             {
@@ -97,6 +96,8 @@ namespace API.Controllers
                 });
             }
         }
+
+  
         
 
         // DELETE api/values/5

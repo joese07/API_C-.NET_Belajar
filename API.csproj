@@ -18,6 +18,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.10" />
     <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.10" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +35,8 @@
     <None Remove="Handler\" />
     <None Remove="BCrypt.Net-Core" />
     <None Remove="Microsoft.AspNetCore.Http" />
+    <None Remove="ViewModels\" />
+    <None Remove="Microsoft.AspNetCore.Authentication.JwtBearer" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -42,5 +45,6 @@
     <Folder Include="Repositories\Data\" />
     <Folder Include="Repositories\Interface\" />
     <Folder Include="Handler\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
 </Project>

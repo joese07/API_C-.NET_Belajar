@@ -64,3 +64,4 @@
 /Users/yohanesjoese/Projects/MVC/API/obj/Debug/net6.0/API.genruntimeconfig.cache
 /Users/yohanesjoese/Projects/MVC/API/obj/Debug/net6.0/ref/API.dll
 /Users/yohanesjoese/Projects/MVC/API/bin/Debug/net6.0/BCrypt.Net-Core.dll
+/Users/yohanesjoese/Projects/MVC/API/bin/Debug/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
