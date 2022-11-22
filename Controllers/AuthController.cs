@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using API.Context;
 using API.Models;
 using API.Repositories.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,11 +29,11 @@ namespace API.Controllers
         // POST api/values
         [HttpPost("Register")]
         
-        public ActionResult Register(string fullName, string email, string birthDate, string password, string retypePassword)
+        public ActionResult Register(string fullName, string email, string birthDate,string gender, string phoneNumber,string password, string retypePassword, int departementId)
         {
             try
             {
-                var result = _repository.Register(fullName, email, birthDate, password, retypePassword);
+                var result = _repository.Register(fullName, email,  birthDate, gender,phoneNumber, password, retypePassword, departementId);
                 if(result == 0)
                 {
                     return Ok(new { Message = "Email Already Exists"});
@@ -85,7 +86,7 @@ namespace API.Controllers
                 {
                     StatusCode = 200,
                     Message = "Login Successful",
-                    Data = result
+                    Token = result
                 });
             } catch
             {
@@ -130,6 +131,7 @@ namespace API.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("ChangePassword")]
         public ActionResult ChangePassword(int id, string oldPassword, string retypePassword, string password)
         {

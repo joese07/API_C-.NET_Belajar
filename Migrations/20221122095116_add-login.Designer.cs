@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20221103070925_Initial_Login")]
-    partial class Initial_Login
+    [Migration("20221122095116_add-login")]
+    partial class addlogin
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -74,6 +74,9 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("DepartementId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -82,7 +85,17 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("DepartementId");
 
                     b.ToTable("Employees");
                 });
@@ -131,6 +144,17 @@ namespace API.Migrations
                         .IsRequired();
 
                     b.Navigation("Divisions");
+                });
+
+            modelBuilder.Entity("API.Models.Employee", b =>
+                {
+                    b.HasOne("API.Models.Departement", "Departements")
+                        .WithMany()
+                        .HasForeignKey("DepartementId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Departements");
                 });
 
             modelBuilder.Entity("API.Models.User", b =>

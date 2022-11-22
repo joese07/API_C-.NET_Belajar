@@ -5,8 +5,10 @@
 /Users/yohanesjoese/Projects/MVC/API/bin/Debug/net6.0/API.runtimeconfig.json
 /Users/yohanesjoese/Projects/MVC/API/bin/Debug/net6.0/API.dll
 /Users/yohanesjoese/Projects/MVC/API/bin/Debug/net6.0/API.pdb
+/Users/yohanesjoese/Projects/MVC/API/bin/Debug/net6.0/BCrypt.Net-Core.dll
 /Users/yohanesjoese/Projects/MVC/API/bin/Debug/net6.0/Castle.Core.dll
 /Users/yohanesjoese/Projects/MVC/API/bin/Debug/net6.0/Humanizer.dll
+/Users/yohanesjoese/Projects/MVC/API/bin/Debug/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
 /Users/yohanesjoese/Projects/MVC/API/bin/Debug/net6.0/Microsoft.Data.SqlClient.dll
 /Users/yohanesjoese/Projects/MVC/API/bin/Debug/net6.0/Microsoft.EntityFrameworkCore.dll
 /Users/yohanesjoese/Projects/MVC/API/bin/Debug/net6.0/Microsoft.EntityFrameworkCore.Abstractions.dll
@@ -63,5 +65,8 @@
 /Users/yohanesjoese/Projects/MVC/API/obj/Debug/net6.0/API.pdb
 /Users/yohanesjoese/Projects/MVC/API/obj/Debug/net6.0/API.genruntimeconfig.cache
 /Users/yohanesjoese/Projects/MVC/API/obj/Debug/net6.0/ref/API.dll
-/Users/yohanesjoese/Projects/MVC/API/bin/Debug/net6.0/BCrypt.Net-Core.dll
-/Users/yohanesjoese/Projects/MVC/API/bin/Debug/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/yohanesjoese/Projects/MVC/API/obj/Debug/net6.0/staticwebassets/msbuild.API.Microsoft.AspNetCore.StaticWebAssets.props
+/Users/yohanesjoese/Projects/MVC/API/obj/Debug/net6.0/staticwebassets/msbuild.build.API.props
+/Users/yohanesjoese/Projects/MVC/API/obj/Debug/net6.0/staticwebassets/msbuild.buildMultiTargeting.API.props
+/Users/yohanesjoese/Projects/MVC/API/obj/Debug/net6.0/staticwebassets/msbuild.buildTransitive.API.props
+/Users/yohanesjoese/Projects/MVC/API/obj/Debug/net6.0/staticwebassets.pack.json

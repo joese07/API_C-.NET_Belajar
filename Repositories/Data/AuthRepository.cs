@@ -23,7 +23,7 @@ namespace API.Repositories.Data
             _configuration = config;
         }
 
-        public int Register(string fullName, string email, string birthDate, string password, string retypePassword)
+        public int Register(string fullName, string email, string birthDate,string gender, string phoneNumber, string password, string retypePassword, int departementId)
         {
             var dataEmail = myContext.Users.Include(x => x.Employee).SingleOrDefault(x => x.Employee.Email.Equals(email));
             if (dataEmail == null)
@@ -34,7 +34,10 @@ namespace API.Repositories.Data
                     {
                         FullName = fullName,
                         Email = email,
-                        BirthDate = birthDate
+                        BirthDate = birthDate,
+                        Gender = gender,
+                        PhoneNumber = phoneNumber,
+                        DepartementId = departementId
                     };
 
 
@@ -47,7 +50,7 @@ namespace API.Repositories.Data
                         {
                             Id = id,
                             Password = Hashing.HashPassword(password),
-                            RoleId = 2,
+                            RoleId = 1,
                         };
 
                         myContext.Users.Add(user);
@@ -82,10 +85,10 @@ namespace API.Repositories.Data
                         new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                         new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
-                        new Claim("UserId", data.Employee.Id.ToString()),
-                        new Claim("DisplayName", data.Employee.FullName),
-                        new Claim("Email", data.Employee.Email),
-                        new Claim("Roles", data.Roles.Name)
+                        new Claim("userId", data.Employee.Id.ToString()),
+                        new Claim("fullName", data.Employee.FullName),
+                        new Claim("email", data.Employee.Email),
+                        new Claim("role", data.Roles.Name)
                     };
 
                     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
@@ -98,14 +101,6 @@ namespace API.Repositories.Data
                         signingCredentials: signIn);
 
                     var result = new JwtSecurityTokenHandler().WriteToken(token);
-
-                    //return Ok(new JwtSecurityTokenHandler().WriteToken(token));
-
-                    //string[] result = new string[4];
-                    //result[0] = Convert.ToString(data.Employee.Id);
-                    //result[1] = data.Employee.FullName;
-                    //result[2] = data.Employee.Email;
-                    //result[3] = data.Roles.Name;
 
                     return result;
 
@@ -135,7 +130,7 @@ namespace API.Repositories.Data
                         myContext.Entry(data).State = EntityState.Modified;
                         var result = myContext.SaveChanges();
                         if (result > 0)
-                            return result;
+                            return 2;
                     }
                     return 0;
 
@@ -166,15 +161,13 @@ namespace API.Repositories.Data
                         myContext.Entry(data).State = EntityState.Modified;
                         var result = myContext.SaveChanges();
                         if (result > 0)
-                            return result;
+                            return 2;
                     }
                   
                     return 0;
 
                 }
 
-
-              
                 return 1;
             }
 

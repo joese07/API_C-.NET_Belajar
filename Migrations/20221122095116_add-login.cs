@@ -4,7 +4,7 @@
 
 namespace API.Migrations
 {
-    public partial class Initial_Login : Migration
+    public partial class addlogin : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,12 +15,21 @@ namespace API.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BirthDate = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    BirthDate = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DepartementId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Employees", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Employees_Departements_DepartementId",
+                        column: x => x.DepartementId,
+                        principalTable: "Departements",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -60,6 +69,11 @@ namespace API.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employees_DepartementId",
+                table: "Employees",
+                column: "DepartementId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_RoleId",

@@ -37,6 +37,7 @@
     <None Remove="Microsoft.AspNetCore.Http" />
     <None Remove="ViewModels\" />
     <None Remove="Microsoft.AspNetCore.Authentication.JwtBearer" />
+    <None Remove="Base\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -46,5 +47,6 @@
     <Folder Include="Repositories\Interface\" />
     <Folder Include="Handler\" />
     <Folder Include="ViewModels\" />
+    <Folder Include="Base\" />
   </ItemGroup>
 </Project>
