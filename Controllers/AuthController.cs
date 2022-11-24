@@ -27,13 +27,14 @@ namespace API.Controllers
         }
 
         // POST api/values
+      
         [HttpPost("Register")]
-        
+
         public ActionResult Register(string fullName, string email, string birthDate,string gender, string phoneNumber,string password, string retypePassword, int departementId)
         {
             try
             {
-                var result = _repository.Register(fullName, email,  birthDate, gender,phoneNumber, password, retypePassword, departementId);
+                var result = _repository.Register(fullName, email,  birthDate, gender, phoneNumber, password, retypePassword, departementId);
                 if(result == 0)
                 {
                     return Ok(new { Message = "Email Already Exists"});
@@ -98,8 +99,35 @@ namespace API.Controllers
             }
         }
 
-  
-        
+        [HttpPost("CheckResetPassword")]
+        public ActionResult CheckResetPassword(string fullName, string email,string phoneNumber, string birthDate)
+        {
+            try
+            {
+                var result = _repository.CheckResetPassword(fullName, email, birthDate, phoneNumber);
+                if (result == 0)
+                {
+                    return Ok(new { Message = "Check Reset Password Failed" });
+                }
+                else
+                {
+                    return Ok(new
+                    {
+                        StatusCode = 200,
+                        Message = "Check Reset Password Successfull",
+                        Data = result
+                    }) ;
+                }
+            }
+            catch
+            {
+                return BadRequest(new
+                {
+                    StatusCode = 400,
+                    Message = "Something Wrong..."
+                });
+            }
+        }
 
         // DELETE api/values/5
         [HttpPost("ResetPassword")]

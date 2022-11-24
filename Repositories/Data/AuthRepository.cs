@@ -23,6 +23,7 @@ namespace API.Repositories.Data
             _configuration = config;
         }
 
+
         public int Register(string fullName, string email, string birthDate,string gender, string phoneNumber, string password, string retypePassword, int departementId)
         {
             var dataEmail = myContext.Users.Include(x => x.Employee).SingleOrDefault(x => x.Employee.Email.Equals(email));
@@ -114,11 +115,32 @@ namespace API.Repositories.Data
             return null;
         }
 
+        public int CheckResetPassword(string fullName, string email, string birthDate, string phoneNumber)
+        {
+            var data = myContext.Users
+                .Include(x => x.Employee)
+                .SingleOrDefault(x => x.Employee.Email
+                .Equals(email) && x.Employee.FullName
+                .Equals(fullName) && x.Employee.BirthDate
+                .Equals(birthDate) && x.Employee.PhoneNumber.Equals(phoneNumber));
+
+            if (data != null)
+            {
+               
+
+                var result = data.Id;
+
+                return result;
+            }
+
+            return 0;
+        }
 
         public int NewPassword(int id, string password, string retypePassword)
         {
             try
             {
+               
                 var data = myContext.Users.Find(id);
 
 
