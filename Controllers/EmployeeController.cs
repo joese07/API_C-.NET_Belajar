@@ -6,12 +6,14 @@ using API.Context;
 using API.Models;
 using API.Repositories.Data;
 using API.Repositories.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace API.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     public class EmployeeController : Controller
     {

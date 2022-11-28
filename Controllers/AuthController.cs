@@ -138,7 +138,7 @@ namespace API.Controllers
                 var result = _repository.NewPassword(id, password, retypePassword);
                 if(result == 0)
                 {
-                    return Ok(new { Message = "Retype Password Invalid" });
+                    return Ok(new { Message = "Confirm Password Invalid" });
 
                 } else if( result == 1)
                 {

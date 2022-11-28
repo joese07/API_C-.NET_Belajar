@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     public class DepartementController : BaseeController<DepartementRepository, Departement>
     {

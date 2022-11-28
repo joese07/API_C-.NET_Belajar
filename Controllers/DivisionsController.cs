@@ -14,7 +14,7 @@ namespace API.Controllers
 {
   
     [Route("api/[controller]")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     //Menggunakan Metode Generic Controller
     public class DivisionsController : BaseeController<DivisionRepository, Division>
     {
